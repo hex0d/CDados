@@ -1,15 +1,16 @@
 #######
-#######         LEIA!!! - o professor pediu pra usar ASCII - ext, mas é muito trampo desnecessário, então tá usando unicode
-#######
+#######         LEIA!!! - o professor pediu pra usar ASCII - ext, mas é muito trampo desnecessário, então tá usando unicode/utf-8
+#######                 CONVERSOR = https://onlinebinarytools.com/convert-binary-to-utf8
 
 
-import binascii
+def main():
+    msg = input("Mensagem?: ")
+    msg_em_binário(msg)
 
-# Definir a MSG
-msg = u"Dados Conversam çç è?"
-msg_lengh = len(msg)
 
-def lista_em_binário(msg):
+
+## função para transformar a string em binário
+def msg_em_binário(msg):
     ###### listas para transformar em binário
 
     #coloca
@@ -43,7 +44,7 @@ def lista_em_binário(msg):
 
     print(msg_complete_str)
 
-lista_em_binário(msg)
+main()
 
 
 
