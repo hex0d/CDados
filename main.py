@@ -3,14 +3,35 @@
 #######                 CONVERSOR = https://onlinebinarytools.com/convert-binary-to-utf8
 
 
+
+
+
+
+
 def main():
     msg = input("Mensagem?: ")
-    msg_em_binário(msg)
+    opt = input("Modo Jumento ou não Jumento? (1 ou 2) ")
+    opt = int(opt)
+    if opt == 1:
+        bin_msg(msg)
+    elif opt == 2:
+        bin_msg_python(msg)
+    else:
+        print('Opção errada')
+        main()
+        return 0
 
 
 
-## função para transformar a string em binário
-def msg_em_binário(msg):
+
+## função para transformar a string em binário do modo fácil
+def bin_msg_python(msg):
+    answ = ''.join(format(ord(i),'b').zfill(8) for i in msg)
+    print(answ)
+
+
+## função para transformar a string em binário do modo difícil
+def bin_msg(msg):
     ###### listas para transformar em binário
 
     #coloca
@@ -43,6 +64,8 @@ def msg_em_binário(msg):
 
 
     print(msg_complete_str)
+
+
 
 main()
 
