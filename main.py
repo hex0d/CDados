@@ -1,5 +1,6 @@
 #######
-#######         LEIA!!! - o professor pediu pra usar ASCII - ext, mas é muito trampo desnecessário, então tá usando unicode/utf-8
+#######         LEIA!!! - o professor pediu pra usar ASCII - ext,
+#######                  mas é muito trampo desnecessário, então tá usando unicode/utf-8
 #######                 CONVERSOR = https://onlinebinarytools.com/convert-binary-to-utf8
 
 
@@ -9,67 +10,77 @@
 
 
 def main():
-    msg = input("Mensagem?: ")
-    opt = input("Modo Jumento ou não Jumento? (1 ou 2) ")
-    opt = int(opt)
-    if opt == 1:
-        bin_msg(msg)
-    elif opt == 2:
-        bin_msg_python(msg)
+
+
+    mensagem = input("Mensagem?: ")
+    opcao_escolhida = input("Modo Jumento ou não Jumento? (1 ou 2) ")
+    opcao_escolhida = int(opcao_escolhida)
+
+    mensagem_binaria = gerar_mensagem_jeito_selecionado(opcao_escolhida, mensagem)
+    print('Mensagem em binario: ' + mensagem_binaria)
+
+
+def gerar_mensagem_jeito_selecionado(opcao_escolhida, mensagem):
+    # Fazer do jeito facil
+    if opcao_escolhida == 2:
+        mensagem_binaria = transformar_string_para_binario_facil(mensagem)
+
+    # Fazer do jeito dificil
+    elif opcao_escolhida == 1:
+        mensagem_binaria = transformar_string_para_binario_dificil(mensagem)
+
     else:
         print('Opção errada')
         main()
-        return 0
 
 
 
+def transformar_string_para_binario_facil(mensagem):
+    for caracter in mensagem:
+        mensagem_em_binario = ''.join(format(ord(caracter),'b').zfill(8), caracter)
 
-## função para transformar a string em binário do modo fácil
-def bin_msg_python(msg):
-    answ = ''.join(format(ord(i),'b').zfill(8) for i in msg)
-    print(answ)
-
-
-## função para transformar a string em binário do modo difícil
-def bin_msg(msg):
-    ###### listas para transformar em binário
-
-    #coloca
-
-    msg_list = list(msg)
-
-    #mensagem em binário porem vem no formato
-
-    msg_bin = []
-
-    #mensagem faltando
-
-    msg_nofill= []
-
-    #LISTA da mensagem completa
-    msg_complete = []
-
-
-    for i in msg_list:
-        msg_bin.append(bin(ord(i)))
-
-    for i in msg_bin:
-        msg_nofill.append(i[2:])
-
-    for i in msg_nofill:
-        msg_complete.append(i.zfill(8))
-
-    msg_complete_str = ''.join(msg_complete)
+    return mensagem_em_binario
 
 
 
-    print(msg_complete_str)
+def transformar_string_para_binario_dificil(mensagem):
+    caracteres_da_mensagem = list(mensagem)
 
+    # 0b01000001
+    mensagem_binario_formatada = transformar_para_binario_formatado(caracteres_da_mensagem)
+    #   01000001
+    mensagem_binario_puro = transformar_binario_formatado_em_puro(mensagem_binario_formatada)
+    string_mensagem_binaria = criar_string_mensagem_binaria(mensagem_binario_puro)
+
+
+
+def transformar_para_binario_formatado(caracteres_da_mensagem):
+    mensagem_binario_formatada = []
+    for caracter in caracteres_da_mensagem:
+        caracter_em_binario = bin(ord(caracter))
+        print(caracter_em_binario)
+        mensagem_binario_formatada.append(caracter_em_binario)
+
+    return mensagem_binario_formatada
+
+
+
+def transformar_binario_formatado_em_puro(mensagem_binario_formatada):
+    mensagem_binario_puro = []
+    for bit in mensagem_binario_formatada:
+        mensagem_binario_puro.append(bit[2:])
+
+    return mensagem_binario_puro
+
+
+
+def criar_string_mensagem_binaria(mensagem_binario_puro):
+    mensagem_binaria = []
+    for bit in mensagem_binario_puro:
+        mensagem_binaria.append(bit.zfill(8))
+
+    string_mensagem_binaria = ''.join(mensagem_binaria)
+    return string_mensagem_binaria
 
 
 main()
-
-
-
-
-
