@@ -33,13 +33,14 @@ def gerar_mensagem_jeito_selecionado(opcao_escolhida, mensagem):
         print('Opção errada')
         main()
 
+    return mensagem_binaria
+
 
 
 def transformar_string_para_binario_facil(mensagem):
     for caracter in mensagem:
-        mensagem_em_binario = ''.join(format(ord(caracter),'b').zfill(8), caracter)
-
-    return mensagem_em_binario
+        mensagem_binaria = ''.join(format(ord(caracter),'b').zfill(8))
+    return mensagem_binaria
 
 
 
@@ -48,9 +49,12 @@ def transformar_string_para_binario_dificil(mensagem):
 
     # 0b01000001
     mensagem_binario_formatada = transformar_para_binario_formatado(caracteres_da_mensagem)
+
     #   01000001
     mensagem_binario_puro = transformar_binario_formatado_em_puro(mensagem_binario_formatada)
+
     string_mensagem_binaria = criar_string_mensagem_binaria(mensagem_binario_puro)
+    return string_mensagem_binaria
 
 
 
@@ -58,7 +62,6 @@ def transformar_para_binario_formatado(caracteres_da_mensagem):
     mensagem_binario_formatada = []
     for caracter in caracteres_da_mensagem:
         caracter_em_binario = bin(ord(caracter))
-        print(caracter_em_binario)
         mensagem_binario_formatada.append(caracter_em_binario)
 
     return mensagem_binario_formatada
