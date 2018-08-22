@@ -38,8 +38,9 @@ def gerar_mensagem_jeito_selecionado(opcao_escolhida, mensagem):
 
 
 def transformar_string_para_binario_facil(mensagem):
+    mensagem_binaria = ''
     for caracter in mensagem:
-        mensagem_binaria = ''.join(format(ord(caracter),'b').zfill(8))
+        mensagem_binaria += ''.join(format(ord(caracter),'b').zfill(8))
     return mensagem_binaria
 
 
