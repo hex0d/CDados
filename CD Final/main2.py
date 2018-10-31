@@ -21,11 +21,15 @@ def to_MLT(array_msg): #transform from binary list to MLT-3 array
     return MLT_array
 
 def main():
-    msg = str(input('Mensagem: '))
+    '''msg = str(input('Mensagem: '))
     bin_msg = to_bin(msg)
     print('Mensagem em Binário: '+ bin_msg['bin_msg'])
-    print('Mensagem em MLT-3: '+ ''.join(str(to_MLT(bin_msg['array_msg']))))
+    print('Mensagem em MLT-3: '+ ''.join(str(to_MLT(bin_msg['array_msg']))))'''
+    a = to_MLT([1,0,1,1,0,1,0])
+    print(a,type(a))
 
+    b = ''.join(str(x) for x in a)
+    print(b[3])
 
 if __name__ == "__main__":
     main()
