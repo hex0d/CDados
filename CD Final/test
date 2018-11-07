@@ -1,0 +1,44 @@
+'''import matplotlib.pyplot as plt
+input_amp = [0, 1, 0, -1, -1, 0, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1, 0, 1, 1, 1, 0, -1, -1, 0, 1, 0, 0, -1, -1, -1, -1, 0, 1, 0, 0, 0, -1, -1, -1, 0, 1, 1, 0, 0, 0, -1, -1, 0, 1, 1, 0, -1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, -1, -1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 0, -1, -1, -1, 0, 0, 1, 0, -1, -1, 0, 0, 0, 0, 1, 0, 0, -1, 0, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 1, 1, 0, -1, -1, -1, -1, 0, 1, 1, 0, -1, 0, 1, 1, 0, -1, -1, 0, 1, 0, 0, 0, -1, 0, 0, 0, 1, 0, -1, -1, 0, 1, 1, 1, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 1, 0, 0, 0, 0, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 0, -1, -1, 0, 1, 1, 1, 0, -1, -1, -1, -1, -1, 0, 0, 1, 0, 0, -1, -1, -1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, -1, -1, -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, -1, -1, 0, 0, 1, 0, -1, -1, -1, 0, 0, 0, 1, 0, -1, -1, -1, 0, 0, 0, 1, 0, 0, -1, 0, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 1, 1, 1, 1, 0, -1, -1, 0, 1, 1, 0, -1, 0, 1, 1, 0, -1, -1, 0, 1, 1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, 0, 1, 1, 1, 1, 0, -1, -1, 0, 1, 0, 0, -1, -1, -1, -1, 0, 1, 0, -1, -1, 0, 0]
+input_amp.insert(0,input_amp[0])
+
+x_ticks = []
+
+for x in range(len(input_amp)):
+    x_ticks.append(x)
+
+print(x_ticks)
+
+
+plt.plot(input_amp, color='black',drawstyle='steps-pre')
+
+plt.xticks(x_ticks)
+plt.yticks([-1,0,1])
+
+plt.show()'''
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
+
+fig, ax = plt.subplots()
+plt.subplots_adjust(bottom=0.25)
+
+t = np.arange(0.0, 100.0, 0.1)
+s = np.sin(2*np.pi*t)
+l, = plt.plot(t,s)
+plt.axis([0, 10, -1, 1])
+
+axcolor = 'lightgoldenrodyellow'
+axpos = plt.axes([0.2, 0.1, 0.65, 0.03], axisbg=axcolor)
+
+spos = Slider(axpos, 'Pos', 0.1, 90.0)
+
+def update(val):
+    pos = spos.val
+    ax.axis([pos,pos+10,-1,1])
+    fig.canvas.draw_idle()
+
+spos.on_changed(update)
+
+plt.show()

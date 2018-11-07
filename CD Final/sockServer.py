@@ -1,6 +1,7 @@
 import socket
 import pickle
 import sys
+from Main import *
 
 def server_socket(port):
     host = ''
@@ -13,20 +14,24 @@ def server_socket(port):
     sock.listen(5)
     print("Waiting for Connection")
 
+    conn, addr = sock.accept()
     while True:
-        conn, addr = sock.accept()
-
-        print('Connected to ' + addr[0] + ':' + str(addr[1]))
         data = conn.recv(1024)
         if not data:
             break
         data = pickle.loads(data)
+        print('Connected to ' + addr[0] + ':' + str(addr[1]))
+
         if type(data) is list:
             conn.send(str.encode('ok'))
+            new_data = True
+            server_data = data
         else:
             conn.send(str.encode('error'))
 
+
     conn.close()
+
     return data
 
 if __name__ == '__main__':
