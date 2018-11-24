@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Decode import *
+from MPL import *
 import socket
 import pickle
 
@@ -22,7 +23,7 @@ class Ui_ClientWindow(object):
         # Regulare expression
         ipRegex = QtCore.QRegExp("^" + ipRange + "\\." + ipRange + "\\." + ipRange + "\\." + ipRange + "$")
         ipValidator = QtGui.QRegExpValidator(ipRegex)
-
+        self.str_msg = ''
         self.centralwidget = QtWidgets.QWidget(ClientWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.msg_box = QtWidgets.QLineEdit(self.centralwidget)
@@ -50,9 +51,11 @@ class Ui_ClientWindow(object):
         self.butt_graph_bin = QtWidgets.QPushButton(self.centralwidget)
         self.butt_graph_bin.setGeometry(QtCore.QRect(590, 170, 61, 41))
         self.butt_graph_bin.setObjectName("butt_graph_bin")
+        self.butt_graph_bin.clicked.connect(self.plot_bin)
         self.butt_graph_MLT = QtWidgets.QPushButton(self.centralwidget)
         self.butt_graph_MLT.setGeometry(QtCore.QRect(590, 250, 61, 41))
         self.butt_graph_MLT.setObjectName("butt_graph_MLT")
+        self.butt_graph_MLT.clicked.connect(self.plot_MLT)
         self.butt_exit = QtWidgets.QPushButton(self.centralwidget)
         self.butt_exit.setGeometry(QtCore.QRect(20, 320, 75, 23))
         self.butt_exit.setObjectName("butt_exit")
@@ -122,6 +125,27 @@ class Ui_ClientWindow(object):
         self.retranslateUi(ClientWindow)
         QtCore.QMetaObject.connectSlotsByName(ClientWindow)
 
+    def plot_bin(self):
+        test = []
+        if self.str_msg == '':
+            self.bin_opt.setText('No Bin MSG')
+        else:
+            for c in self.str_msg:
+                if c =='1' or c=='0':
+                    test.append(int(c))
+                else:
+                    continue
+            plot_graph(test)
+    def plot_MLT(self):
+        if len(self.MLT_array) <= 1:
+            self.bin_opt.setText('No MLT MSG')
+        else:
+            plot_graph(self.MLT_array)
+
+
+
+
+
     def client_socket(self, host, port, message):
         try:
             sock = socket.socket()
@@ -130,7 +154,7 @@ class Ui_ClientWindow(object):
             sock.send(message)
             data = sock.recv(1024)
             if data.decode('utf-8') == 'ok':
-                print(data.decode('utf-8'))
+                #print(data.decode('utf-8'))
                 sock.close()
                 return 1
             else:
@@ -173,6 +197,7 @@ class Ui_ClientWindow(object):
         self.str_msg = ' '.join(self.str_msg[i:i + 8] for i in range(0, len(self.str_msg), 8))
         self.bin_opt.setText(self.str_msg)
         self.MLT_array = to_MLT(self.dec_msg['array_msg'])
+        #print(self.MLT_array,type(self.MLT_array))
         self.MLT_opt.setText(''.join(str(to_MLT(self.dec_msg['array_msg']))))
         a = self.client_socket(ip_addr,port,self.MLT_array)
         if a == 1:

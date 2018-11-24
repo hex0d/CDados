@@ -8,9 +8,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from MPL import *
 import threading
 import socket
 import pickle
+
 
 
 
@@ -23,11 +25,14 @@ class Ui_Server(object):
     def setupUi(self, Server):
         Server.setObjectName("Server")
         Server.resize(733, 444)
+        self.str_msg_save = ''
+        self.MLT_array_save = []
         self.centralwidget = QtWidgets.QWidget(Server)
         self.centralwidget.setObjectName("centralwidget")
         self.butt_graph_bin = QtWidgets.QPushButton(self.centralwidget)
         self.butt_graph_bin.setGeometry(QtCore.QRect(610, 200, 61, 41))
         self.butt_graph_bin.setObjectName("butt_graph_bin")
+        self.butt_graph_bin.clicked.connect(self.plot_bin)
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(290, 80, 61, 20))
         self.label_5.setObjectName("label_5")
@@ -38,6 +43,8 @@ class Ui_Server(object):
         self.butt_graph_MLT = QtWidgets.QPushButton(self.centralwidget)
         self.butt_graph_MLT.setGeometry(QtCore.QRect(610, 260, 61, 41))
         self.butt_graph_MLT.setObjectName("butt_graph_MLT")
+        self.butt_graph_MLT.clicked.connect(self.plot_MLT)
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(260, 30, 241, 31))
         self.status_label = QtWidgets.QLabel(self.centralwidget)
@@ -144,9 +151,28 @@ class Ui_Server(object):
         printable_data = self.decoder(data)
         bin_str = printable_data['bin_opt']
         bin_str = ' '.join(bin_str[i:i + 8] for i in range(0, len(bin_str), 8))
+        self.str_msg_save = bin_str
+        self.MLT_array_save = data
         self.bin_opt.setText(bin_str)
         self.str_msg.setText(printable_data['text'])
 
+
+    def plot_bin(self):
+        test = []
+        if self.str_msg_save == '':
+            self.bin_opt.setText('No Bin MSG')
+        else:
+            for c in self.str_msg_save:
+                if c =='1' or c=='0':
+                    test.append(int(c))
+                else:
+                    continue
+            plot_graph(test)
+    def plot_MLT(self):
+        if len(self.MLT_array_save) <= 1:
+            self.MLT_opt.setText('No MLT MSG')
+        else:
+            plot_graph(self.MLT_array_save)
 
     def server_socket(self,port):
         host = ''

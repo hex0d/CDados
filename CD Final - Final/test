@@ -15,8 +15,8 @@ plt.plot(input_amp, color='black',drawstyle='steps-pre')
 plt.xticks(x_ticks)
 plt.yticks([-1,0,1])
 
-plt.show()'''
-
+plt.show()
+'''
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
